@@ -1,13 +1,15 @@
-// Set your target city's lat & lng; mine is Leuven, Belgium.
+// Set your target city's lat & lng;
+// mine is Leuven, Belgium.
 let targetCity = {
     lat: 50.879844,
     lng: 4.700518
 };
 
-// Set your variable 'query' for the category you are searching for; mine is cafe : I will be searching for cafes in Leuven
+// Set your variable 'query' for the category you are searching for;
+// mine is cafe : I will be searching for cafes in Leuven
 const query = "cafe";
 
-let foursquareURL4Data = "https://api.foursquare.com/v2/venues/search?ll=50.879844,4.700518&client_id=" + clientID + "&client_secret=" + clientSecret + "&v=20180316&limit=10&query=" + query;
+let foursquareURL4Data = "https://api.foursquare.com/v2/venues/search?ll=50.879844,4.700518&client_id=" + clientID + "&client_secret=" + clientSecret + "&v=20180316&limit=6&query=" + query;
 
 let Location = function(data) {
 	this.name = data.name;
@@ -15,7 +17,7 @@ let Location = function(data) {
 	this.lng = data.location.lng;
 };
 
-// Gets the locations data from foursquare and store it into its own variables.
+// Gets the locations data from foursquare and store them into 'locationsData' object.
 $.getJSON(foursquareURL4Data).done(function(data) {
     let rawData = data.response.venues;
     let locationsData = rawData.map(item => new Location(item));
