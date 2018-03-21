@@ -1,8 +1,31 @@
 // Knockout must be used to handle the list, filter, and any other information on the page that is subject to changing state. Things that should not be handled by Knockout: anything the Maps API is used for, creating markers, tracking click events on markers, making the map, refreshing the map. Note 1: Tracking click events on list items should be handled with Knockout. Note 2: Creating your markers as a part of your ViewModel is allowed (and recommended). Creating them as Knockout observables is not.
 
-let map, infowindow, contentString, oldMarker;
+let map, infowindow, oldMarker, foursquareURL4Data, foursquareURL4Img;
 
-contentString = 'hahaha';
+let OpenInfoWindow = function(cafe) {
+    let result;
+    let self = this;
+    foursquareURL4Data = "https://api.foursquare.com/v2/venues/search?ll=" + cafe.lat + "," + cafe.lng + "&client_id=" + clientID + "&client_secret=" + clientSecret + "&v=20180320&query=" + cafe.name;
+    // foursquareURL4Img = "https://api.foursquare.com/v2/venues/" + VENUE_ID + "/photos"
+// https://api.foursquare.com/v2/venues/4bc8672c0050b7134343ba3b/photos?&v=20180320&client_id=PJ0MJJRRYMF2BPAWAWFNKOQXDB1BI3IQSBSEG3QNDMUTXJH4&client_secret=PDPHZHXSTJVQ40SEDUPQ4QJZLLX5MRCUHUG0DEAZFUCEWYV4
+
+    $.getJSON(foursquareURL4Data).done(function(data) {
+        result = data.response.venues[0];
+        self.contact = result.contact.formattedPhone;
+        self.address = result.location.address;
+
+        self.contentStrings = '<div class="card" style="width: 18rem;"><div class="card-body"><div class="card-title"><strong>' + cafe.name + '</strong></div>' +
+            '<div class="card-text"><strong>contact: </strong>' + self.contact + '</div><div class="card-text"><strong>address: </strong>' + self.address + '</div></div></div>';
+
+        infowindow.setContent(self.contentStrings);
+        infowindow.open(map, cafe.marker);
+    }).fail(function() {
+        alert(
+            'There was an error while retrieving locations data from the Foursquare API. Please refresh the page.'
+        );
+    });
+
+};
 
 let bounceMarker = function(markerSelected) {
     // sets all other markers stop bouncing
@@ -20,9 +43,8 @@ function LocationDetail(cafe) {
     this.lng = cafe.lng;
     this.showMarker = ko.observable(true);
 
-    infowindow = new google.maps.InfoWindow({
-        content: contentString,
-    });
+    infowindow = new google.maps.InfoWindow();
+
 
     this.marker = new google.maps.Marker({
         position: new google.maps.LatLng(this.lat, this.lng),
@@ -37,7 +59,7 @@ function LocationDetail(cafe) {
 
     // when marker is clicked, bounce it and open infoWindow
     this.marker.addListener('click', function() {
-        infowindow.open(map, self.marker);
+        openInfoWindow = new OpenInfoWindow(self);
         bounceMarker(this);
     });
 
@@ -82,7 +104,7 @@ function ViewModel() {
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: targetCity,
-        zoom: 14.5
+        zoom: 16
     });
 
     ko.applyBindings( new ViewModel() );
