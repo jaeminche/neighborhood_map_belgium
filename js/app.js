@@ -1,33 +1,50 @@
 // Knockout must be used to handle the list, filter, and any other information on the page that is subject to changing state. Things that should not be handled by Knockout: anything the Maps API is used for, creating markers, tracking click events on markers, making the map, refreshing the map. Note 1: Tracking click events on list items should be handled with Knockout. Note 2: Creating your markers as a part of your ViewModel is allowed (and recommended). Creating them as Knockout observables is not.
 
-let map, contentString;
+let map, infowindow, contentString, oldMarker;
 
 contentString = 'hahaha';
+
+let bounceMarker = function(markerSelected) {
+    // sets all other markers stop bouncing
+    if (oldMarker !== undefined && oldMarker.getAnimation() !== null && oldMarker !== markerSelected) {
+        oldMarker.setAnimation(null);
+    }
+    markerSelected.setAnimation(google.maps.Animation.BOUNCE);
+    oldMarker = markerSelected;
+};
 
 function LocationDetail(cafe) {
     let self = this;
     this.name = cafe.name;
     this.lat = cafe.lat;
     this.lng = cafe.lng;
-    this.show = ko.observable(true);
+    this.showMarker = ko.observable(true);
 
-    this.infowindow = new google.maps.InfoWindow({
-        content: contentString
+    infowindow = new google.maps.InfoWindow({
+        content: contentString,
     });
 
     this.marker = new google.maps.Marker({
-        position: new google.maps.LatLng(cafe.lat, cafe.lng),
-        title: cafe.name
+        position: new google.maps.LatLng(this.lat, this.lng),
+        title: this.name,
+        animation: google.maps.Animation.DROP
+
     });
-    // Sets marker
+    // Sets only the marker filtered
     this.setMarker = ko.computed(function() {
-        self.show() ? self.marker.setMap(map) : self.marker.setMap(null);
+        self.showMarker() ? self.marker.setMap(map) : self.marker.setMap(null);
     });
 
+    // when marker is clicked, bounce it and open infoWindow
     this.marker.addListener('click', function() {
-        self.infowindow.open(map, self.marker);
+        infowindow.open(map, self.marker);
+        bounceMarker(this);
     });
 
+    // when the link is clicked, trigger marker clicking
+    this.openInfoAndBounce = function(cafe) {
+        google.maps.event.trigger(this.marker, 'click');
+    };
 }
 
 function ViewModel() {
@@ -35,11 +52,11 @@ function ViewModel() {
 
     this.searchItem = ko.observable('');
 
-    this.retrievedDataArray = ko.observableArray([]);
+    this.unfilteredDataArray = ko.observableArray([]);
 
     // Pushes locations data array into new location list array
     defaultData.forEach(function(item){
-        self.retrievedDataArray.push( new LocationDetail(item) );
+        self.unfilteredDataArray.push( new LocationDetail(item) );
     });
 
     this.filteredDataArray = ko.computed(function() {
@@ -47,15 +64,15 @@ function ViewModel() {
         // If before search, show markers for all the locations and return them,
         // if not, show and return only the filtered ones
         if (!filteredLowerCased) {
-            self.retrievedDataArray().forEach(function(cafe){
-                cafe.show(true);
+            self.unfilteredDataArray().forEach(function(cafe){
+                cafe.showMarker(true);
             });
-            return self.retrievedDataArray();
+            return self.unfilteredDataArray();
         } else {
-            return ko.utils.arrayFilter(self.retrievedDataArray(), function(cafe) {
+            return ko.utils.arrayFilter(self.unfilteredDataArray(), function(cafe) {
                 let cafeLowerCased = cafe.name.toLowerCase();
                 let result = (cafeLowerCased.search(filteredLowerCased) >= 0);
-                cafe.show(result);
+                cafe.showMarker(result);
                 return result;
             });
         }
