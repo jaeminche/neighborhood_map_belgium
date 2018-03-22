@@ -1,30 +1,43 @@
 // Knockout must be used to handle the list, filter, and any other information on the page that is subject to changing state. Things that should not be handled by Knockout: anything the Maps API is used for, creating markers, tracking click events on markers, making the map, refreshing the map. Note 1: Tracking click events on list items should be handled with Knockout. Note 2: Creating your markers as a part of your ViewModel is allowed (and recommended). Creating them as Knockout observables is not.
 
-let map, infowindow, oldMarker, foursquareURL4Data, foursquareURL4Img;
+let map, infowindow, oldMarker, dataReqFoursquare, imgReqFoursquare;
 
 let OpenInfoWindow = function(cafe) {
-    let result;
+    let dataRetrieved, photoDataRetrieved, imgUrl;
+
     let self = this;
-    foursquareURL4Data = "https://api.foursquare.com/v2/venues/search?ll=" + cafe.lat + "," + cafe.lng + "&client_id=" + clientID + "&client_secret=" + clientSecret + "&v=20180320&query=" + cafe.name;
-    // foursquareURL4Img = "https://api.foursquare.com/v2/venues/" + VENUE_ID + "/photos"
-// https://api.foursquare.com/v2/venues/4bc8672c0050b7134343ba3b/photos?&v=20180320&client_id=PJ0MJJRRYMF2BPAWAWFNKOQXDB1BI3IQSBSEG3QNDMUTXJH4&client_secret=PDPHZHXSTJVQ40SEDUPQ4QJZLLX5MRCUHUG0DEAZFUCEWYV4
+    dataReqFoursquare = `https://api.foursquare.com/v2/venues/search?ll=${cafe.lat},${cafe.lng}&client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&v=20180320&query=${cafe.name}`;
 
-    $.getJSON(foursquareURL4Data).done(function(data) {
-        result = data.response.venues[0];
-        self.contact = result.contact.formattedPhone;
-        self.address = result.location.address;
+    $.getJSON(dataReqFoursquare).done(function(data) {
+        dataRetrieved = data.response.venues[0];
+        self.contact = dataRetrieved.contact.formattedPhone;
+        self.address = dataRetrieved.location.address;
+        // self.homepage = function aHreffyHomepage(url) {
+        //     return (!url) ? '<br>Perhaps there is no homepage!' : `<a href="${url}">${url}</a>`;
+        // };
+        self.homepage = (url) => (!url) ? '<br>Perhaps there is no homepage!' : `<a href="${url}">${url}</a>`;
 
-        self.contentStrings = '<div class="card" style="width: 18rem;"><div class="card-body"><div class="card-title"><strong>' + cafe.name + '</strong></div>' +
-            '<div class="card-text"><strong>contact: </strong>' + self.contact + '</div><div class="card-text"><strong>address: </strong>' + self.address + '</div></div></div>';
+        self.contentStrings = `<div class="card" style="width: 13rem"><div class="card-header"><strong>${cafe.name}</strong></div><div class="card-body"><div class="card-text"><strong>contact: </strong>${self.contact}</div><div class="card-text"><strong>address: </strong>${self.address}</div><div class="card-text"><strong>homepage: </strong>${self.homepage(dataRetrieved.url)}</div></div></div>`;
+        self.VENUE_ID = dataRetrieved.id;
 
-        infowindow.setContent(self.contentStrings);
-        infowindow.open(map, cafe.marker);
+        // Make a second request for an image by using another endpoint (this has to be done separatly because image request requires a venue_id which must be retrieved precedently)
+        imgReqFoursquare = `https://api.foursquare.com/v2/venues/${self.VENUE_ID}/photos?&v=20180320&client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}`;
+        $.getJSON(imgReqFoursquare).done(function(imgData) {
+            photoDataRetrieved = imgData.response.photos.items[0];
+            self.imgUrl = photoDataRetrieved.prefix + 'width200' + photoDataRetrieved.suffix;
+            self.imgStrings = `<div class="card" style="width:13rem"><img class="card-img-bottom" src="${self.imgUrl} "alt="cafe image"></div></div>`;
+            infowindow.setContent(self.contentStrings + self.imgStrings);
+            infowindow.open(map, cafe.marker);
+        }).fail(function() {
+            alert(
+                'Oops! Something went wrong while retrieving the image data from Foursquare API. Please refresh the page!'
+                );
+        });
     }).fail(function() {
         alert(
-            'There was an error while retrieving locations data from the Foursquare API. Please refresh the page.'
-        );
+            'Oops! Something went wrong while retrieving the data from Foursquare API. Please refresh the page!'
+            );
     });
-
 };
 
 let bounceMarker = function(markerSelected) {
