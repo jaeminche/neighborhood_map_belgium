@@ -1,5 +1,3 @@
-// Knockout must be used to handle the list, filter, and any other information on the page that is subject to changing state. Things that should not be handled by Knockout: anything the Maps API is used for, creating markers, tracking click events on markers, making the map, refreshing the map. Note 1: Tracking click events on list items should be handled with Knockout. Note 2: Creating your markers as a part of your ViewModel is allowed (and recommended). Creating them as Knockout observables is not.
-
 let map, infowindow, oldMarker, dataReqFoursquare, imgReqFoursquare;
 
 let OpenInfoWindow = function(cafe) {
@@ -10,11 +8,8 @@ let OpenInfoWindow = function(cafe) {
 
     $.getJSON(dataReqFoursquare).done(function(data) {
         dataRetrieved = data.response.venues[0];
-        self.contact = dataRetrieved.contact.formattedPhone;
-        self.address = dataRetrieved.location.address;
-        // self.homepage = function aHreffyHomepage(url) {
-        //     return (!url) ? '<br>Perhaps there is no homepage!' : `<a href="${url}">${url}</a>`;
-        // };
+        self.contact = dataRetrieved.contact.formattedPhone || 'no phone number provided!';
+        self.address = dataRetrieved.location.address || 'no address provided!';
         self.homepage = (url) => (!url) ? '<br>Perhaps there is no homepage!' : `<a href="${url}">${url}</a>`;
 
         self.contentStrings = `<div class="card" style="width: 13rem"><div class="card-header"><strong>${cafe.name}</strong></div><div class="card-body"><div class="card-text"><strong>contact: </strong>${self.contact}</div><div class="card-text"><strong>address: </strong>${self.address}</div><div class="card-text"><strong>homepage: </strong>${self.homepage(dataRetrieved.url)}</div></div></div>`;
@@ -40,8 +35,8 @@ let OpenInfoWindow = function(cafe) {
     });
 };
 
-let bounceMarker = function(markerSelected) {
-    // sets all other markers stop bouncing
+// Bounces only the marker clicked on and stops the previously selected marker bounce if there's any.
+let bounceMarker = markerSelected => {
     if (oldMarker !== undefined && oldMarker.getAnimation() !== null && oldMarker !== markerSelected) {
         oldMarker.setAnimation(null);
     }
@@ -58,12 +53,10 @@ function LocationDetail(cafe) {
 
     infowindow = new google.maps.InfoWindow();
 
-
     this.marker = new google.maps.Marker({
         position: new google.maps.LatLng(this.lat, this.lng),
         title: this.name,
         animation: google.maps.Animation.DROP
-
     });
     // Sets only the marker filtered
     this.setMarker = ko.computed(function() {
@@ -77,9 +70,8 @@ function LocationDetail(cafe) {
     });
 
     // when the link is clicked, trigger marker clicking
-    this.openInfoAndBounce = function(cafe) {
-        google.maps.event.trigger(this.marker, 'click');
-    };
+    this.openInfoAndBounce = cafe => google.maps.event.trigger(this.marker, 'click');
+
 }
 
 function ViewModel() {

@@ -5,37 +5,8 @@ let targetCity = {
     lng: 4.700518
 };
 
-/*
-// Set your variable 'query' for the category you are searching for;
-// mine is cafe : I will be searching for cafes in Leuven
-let locationsDataList;
-
-const query = "cafe";
-
-let foursquareURL4Data = "https://api.foursquare.com/v2/venues/search?ll=50.879844,4.700518&client_id=" + clientID + "&client_secret=" + clientSecret + "&v=20180316&limit=6&query=" + query;
-
-let Location = function(data) {
-	this.name = data.name;
-	this.lat = data.location.lat;
-	this.lng = data.location.lng;
-};
-
-// Gets the locations data from foursquare and store them into 'locationsData' object.
-$.getJSON(foursquareURL4Data).done(function(data) {
-    let rawData = data.response.venues;
-    locationsData = rawData.map(item => new Location(item));
-    locationsDataList = locationsData;
-}).fail(function() {
-    alert(
-        'There was an error while retrieving locations data from the Foursquare API. Please refresh the page.'
-    );
-});
-
-*/
-
-
- // * locationsData object should be returned as follows
-var defaultData = [
+ // locationsData object should be returned as follows
+let defaultData = [
     {
         name: 'Café AperO',
         lat: 50.87870956051208,
