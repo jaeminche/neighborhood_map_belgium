@@ -15,12 +15,12 @@ let OpenInfoWindow = function(cafe) {
         self.contentStrings = `<div class="card" style="width: 13rem"><div class="card-header"><strong>${cafe.name}</strong></div><div class="card-body"><div class="card-text"><strong>contact: </strong>${self.contact}</div><div class="card-text"><strong>address: </strong>${self.address}</div><div class="card-text"><strong>homepage: </strong>${self.homepage(dataRetrieved.url)}</div></div></div>`;
         self.VENUE_ID = dataRetrieved.id;
 
-        // Make a second request for an image by using another endpoint (this has to be done separatly because image request requires a venue_id which must be retrieved precedently)
+        // Make a second request for venue's photo by using another endpoint (this separate api call has to be done because the request for the photos data requires a venue_id in its request URL which is retrieved precedently)
         imgReqFoursquare = `https://api.foursquare.com/v2/venues/${self.VENUE_ID}/photos?&v=20180320&client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}`;
         $.getJSON(imgReqFoursquare).done(function(imgData) {
             photoDataRetrieved = imgData.response.photos.items[0];
             self.imgUrl = photoDataRetrieved.prefix + 'width200' + photoDataRetrieved.suffix;
-            self.imgStrings = `<div class="card" style="width:13rem"><img class="card-img-bottom" src="${self.imgUrl} "alt="cafe image"></div></div>`;
+            self.imgStrings = `<div class="card thumbnail" style="width:13rem"><img class="card-img-bottom" src="${self.imgUrl} "alt="cafe image"></div></div>`;
             infowindow.setContent(self.contentStrings + self.imgStrings);
             infowindow.open(map, cafe.marker);
         }).fail(function() {

@@ -18,46 +18,35 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-sm navbar-dark sticky-top bg-dark flex-sm-nowrap px-2">
-        <div class="d-flex flex-row w-100 col-sm-4 col-md-3 col-lg-2 px-0">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".sidebar" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark flex-sm-nowrap px-2">
+        <div class="dropdown d-flex flex-column flex-sm-row w-100">
+            <!-- dropdown toggle button -->
+            <button class="btn btn-secondary d-none d-sm-block" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a class="navbar-brand w-100 mr-0 mr-sm-2" href="#">NEIGHBORHOOD MAP</a>
+            <!-- app title -->
+            <a class="navbar-brand text-center mr-0 mr-sm-2" href="#">NEIGHBORHOOD MAP</a>
+            <!-- search form -->
+            <input class="form-control form-control-dark w-100" type="text" id="searchForm" data-toggle="dropdown" placeholder="Search and pick one from the menu" aria-label="Search" data-bind="textInput: searchItem, valueUpdate: 'afterkeydown'">
+            <!-- dropdown menu where the cafe list appears in -->
+            <div class="dropdown-menu bg-light p-2" aria-labelledby="dropdownMenuButton">
+                <a class="nav-link dropdown-title ml-1" href="#">
+                  <i class="fa fa-home"></i>
+                  Cafes in Leuven, Belgium
+                </a>
+                <ul class="pl-0" data-bind="foreach: filteredDataArray">
+                    <li class="dropdown-item nav-item d-flex pl-1">
+                        <i class="nav-link fa fa-coffee pr-4 pt-2"></i>
+                        <a class="nav-link dropdown-item venue-name pl-0" href="#" data-bind="text: name, click: openInfoAndBounce"></a>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <input class="form-control form-control-dark w-100" type="text" placeholder="Search : exclude 'cafe'" aria-label="Search" name="q" data-bind="textInput: searchItem, valueUpdate: 'afterkeydown'">
     </nav>
 
-    <div class="container">
-      <div class="row">
-        <nav class="col-5 col-sm-4 col-md-3 col-lg-2 bg-light sidebar">
-          <div class="sidebar-sticky">
-            <ul class="nav flex-column">
-              <li class="nav-item">
-                <a class="nav-link active" href="#">
-                  <i class="fas fa-home"></i>
-                  Cafes in Leuven, Belgium<span class="sr-only">(current)</span>
-                </a>
-              </li>
-            </ul>
-            <ul class="nav flex-column" data-bind="foreach: filteredDataArray">
-              <li class="nav-item d-flex">
-                <i class="fa fa-coffee pt-2 mt-1"></i>
-                <a class="nav-link" href="#" data-bind="text: name, click: openInfoAndBounce"></a>
-              </li>
-            </ul>
-          </div>
-        </nav>
-      </div>
-    </div>
 
 
-
-    <div id="map" class=""></div>
-
-
-
-
+    <div id="map"></div>
 
     <script src="js/knockout-3.4.2.js"></script>
 
@@ -66,9 +55,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-    <!-- Refer to README.md to apply your own foursquare ID and Secret. Below is gitignored for security reason -->
+    <!-- Refer to README.md to apply your own foursquare ID and Secret.
+        config_foursquare.js is gitignored for security reason -->
     <script src="js/config_foursquare.js"></script>
     <script src="js/default_data.js"></script>
+    <script src="js/additions.js"></script>
     <script src="js/app.js"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAr0kiq324g9soFfU_0rqmh5IZ2M6S3L6A&callback=initMap" onerror="googleMapError()"></script>
 

@@ -8,52 +8,33 @@ body {
 }
 
 /*
- * Sidebar
+ * dropdown-menu
  */
-
-.sidebar {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 100; /* Behind the navbar */
-  padding: 0;
+.dropdown-menu {
+  padding-left: 0;
   box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
-  opacity: 0.85;
+  opacity: 0.8;
 }
 
-.sidebar-sticky {
-  position: -webkit-sticky;
-  position: sticky;
-  top: 112px; /* Height of navbar */
-  height: calc(100vh - 112px);
-  padding-top: .5rem;
-  overflow-y: auto; /* make scrollable if contents are longer than the viewport */
-}
-@media (min-width: 576px) {
-  .sidebar-sticky {
-	top: 64px;
-	height: calc(100vh - 64px);
-  }
-}
-
-.sidebar .nav-link {
+.nav-link {
   font-weight: 500;
   color: #333;
+  padding: 0.3rem 0.7rem;
 }
 
-.sidebar .nav-link .fas {
+.nav-link.fa {
   margin-right: 4px;
   color: #999;
 }
 
-.sidebar .nav-link.active {
-  color: #007bff;
+.nav-item:hover .venue-name,
+.nav-item:hover .fa {
+  color: inherit;
 }
 
-.sidebar .nav-link:hover .fas,
-.sidebar .nav-link.active .fas {
-  color: blue;
+.dropdown-title,
+.dropdown-title .fa {
+  color: #007bff;
 }
 
 /*
@@ -88,21 +69,18 @@ body {
  * Icons
  */
 
-.fas {
+.fa {
   width: 16px;
   height: 16px;
   vertical-align: text-bottom;
+  /*margin-right: 0.2rem;*/
 }
-
-/*.cafeImg {
-  background-image: url("paper.gif")
-}*/
 
 /*
  * Map content
  */
 #map {
-    height: 100%;
+  height: 100%;
 	padding: 20px;
 	margin-top: 0;
 }
