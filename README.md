@@ -19,7 +19,7 @@ This app is to demonstrate my abilities to...
 
 1. Go to [Foursquare Developers] (https://developer.foursquare.com/).
 2. Create an account to get your client ID and Secret, the two of which we need in the next step.
-3. Open config_foursquare.js file.
+3. Open config_for_reviewer.js file.
 4. Replace the two 'placeholder's for CLIENT_ID and CLIENT_SECRET variables with your own.
 5. You are ready! Open index.html.
 - ***Then, here are some tips along with your reviewing process :***

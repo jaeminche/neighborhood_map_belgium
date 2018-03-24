@@ -1,5 +1,7 @@
-// Sets the target city's coordination
-// Below is Leuven, Belgium.
+/*
+ * Sets the target city's coordination
+ * Below is Leuven, Belgium.
+ */
 let targetCity = {
     lat: 50.879844,
     lng: 4.700518

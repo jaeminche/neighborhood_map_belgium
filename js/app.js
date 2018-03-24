@@ -1,3 +1,7 @@
+/*
+ * This js file contains the view-model which creates Knockout Observables and calls for API requests
+ */
+
 let map, infowindow, oldMarker, dataReqFoursquare, imgReqFoursquare;
 
 let OpenInfoWindow = function(cafe) {
@@ -35,7 +39,9 @@ let OpenInfoWindow = function(cafe) {
     });
 };
 
-// Bounces only the marker clicked on and stops the previously selected marker bounce if there's any.
+/*
+ * Bounces only the marker clicked on and stops the previously selected marker bounce if there's any.
+ */
 let bounceMarker = markerSelected => {
     if (oldMarker !== undefined && oldMarker.getAnimation() !== null && oldMarker !== markerSelected) {
         oldMarker.setAnimation(null);
@@ -58,9 +64,10 @@ function LocationDetail(cafe) {
         title: this.name,
         animation: google.maps.Animation.DROP
     });
+
     // Sets only the marker filtered
     this.setMarker = ko.computed(function() {
-        self.showMarker() ? self.marker.setMap(map) : self.marker.setMap(null);
+        return self.showMarker() ? self.marker.setMap(map) : self.marker.setMap(null);
     });
 
     // when marker is clicked, bounce it and open infoWindow
@@ -115,7 +122,7 @@ function initMap() {
     ko.applyBindings( new ViewModel() );
 }
 
-// handle google map error
+// handles google map error
 function googleMapError() {
     alert('An error occurred while retrieving data from Google Map!');
 }

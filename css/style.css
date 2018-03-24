@@ -1,40 +1,40 @@
 html, body {
-    height: 100%;
-    margin: 0;
+	height: 100%;
+	margin: 0;
 }
 
 body {
-  font-size: .875rem;
+	font-size: .875rem;
 }
 
 /*
  * dropdown-menu
  */
 .dropdown-menu {
-  padding-left: 0;
-  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
-  opacity: 0.8;
+	padding-left: 0;
+	box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+	opacity: 0.8;
 }
 
 .nav-link {
-  font-weight: 500;
-  color: #333;
-  padding: 0.3rem 0.7rem;
+	font-weight: 500;
+	color: #333;
+	padding: 0.3rem 0.7rem;
 }
 
 .nav-link.fa {
-  margin-right: 4px;
-  color: #999;
+	margin-right: 4px;
+	color: #999;
 }
 
 .nav-item:hover .venue-name,
 .nav-item:hover .fa {
-  color: inherit;
+	color: inherit;
 }
 
 .dropdown-title,
 .dropdown-title .fa {
-  color: #007bff;
+	color: #007bff;
 }
 
 /*
@@ -42,27 +42,27 @@ body {
  */
 
 .navbar-brand {
-  padding: .75rem;
-  font-size: 1rem;
-  background-color: rgba(0, 0, 0, .25);
-  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
+	padding: .75rem;
+	font-size: 1rem;
+	background-color: rgba(0, 0, 0, .25);
+	box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
 }
 
 .navbar .form-control {
-  padding: .75rem 1rem;
-  border-width: 0;
-  border-radius: 0;
+	padding: .75rem 1rem;
+	border-width: 0;
+	border-radius: 0;
 }
 
 .form-control-dark {
-  color: #fff;
-  background-color: rgba(255, 255, 255, .1);
-  border-color: rgba(255, 255, 255, .1);
+	color: #fff;
+	background-color: rgba(255, 255, 255, .1);
+	border-color: rgba(255, 255, 255, .1);
 }
 
 .form-control-dark:focus {
-  border-color: transparent;
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+	border-color: transparent;
+	box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
 }
 
 /*
@@ -70,9 +70,9 @@ body {
  */
 
 .fa {
-  width: 16px;
-  height: 16px;
-  vertical-align: text-bottom;
+	width: 16px;
+	height: 16px;
+	vertical-align: text-bottom;
 }
 
 /*
@@ -80,22 +80,22 @@ body {
  */
 
 .attribution {
-  z-index: 1000000;
-  position: fixed;
-  left: 0;
-  bottom: 0.5rem;
-  opacity: 0.7;
+	z-index: 1000000;
+	position: fixed;
+	left: 0;
+	bottom: 0.5rem;
+	opacity: 0.7;
 }
 
 .attribution-img {
-  width: 12rem;
+	width: 12rem;
 }
 
 /*
  * Map content
  */
 #map {
-  height: 100%;
+	height: 100%;
 	padding: 20px;
 	margin-top: 0;
 }
