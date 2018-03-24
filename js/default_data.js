@@ -1,11 +1,11 @@
-// Set your target city's lat & lng;
-// mine is Leuven, Belgium.
+// Sets the target city's coordination
+// Below is Leuven, Belgium.
 let targetCity = {
     lat: 50.879844,
     lng: 4.700518
 };
 
- // locationsData object should be returned as follows
+ // default data object to be used in App.js
 let defaultData = [
     {
         name: 'Café AperO',
