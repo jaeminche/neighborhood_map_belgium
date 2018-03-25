@@ -99,3 +99,7 @@ body {
 	padding: 20px;
 	margin-top: 0;
 }
+
+.card {
+	width: 13rem;
+}

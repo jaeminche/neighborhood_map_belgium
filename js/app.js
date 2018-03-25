@@ -8,7 +8,9 @@ let OpenInfoWindow = function(cafe) {
     let dataRetrieved, photoDataRetrieved, imgUrl;
 
     let self = this;
-    dataReqFoursquare = `https://api.foursquare.com/v2/venues/search?ll=${cafe.lat},${cafe.lng}&client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&v=20180320&query=${cafe.name}`;
+    dataReqFoursquare = `https://api.foursquare.com/v2/venues/search?ll=${cafe.lat},${cafe.lng}
+        &client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}
+        &v=20180320&query=${cafe.name}`;
 
     $.getJSON(dataReqFoursquare).done(function(data) {
         dataRetrieved = data.response.venues[0];
@@ -16,7 +18,12 @@ let OpenInfoWindow = function(cafe) {
         self.address = dataRetrieved.location.address || 'no address provided!';
         self.homepage = (url) => (!url) ? '<br>Perhaps there is no homepage!' : `<a href="${url}">${url}</a>`;
 
-        self.contentStrings = `<div class="card" style="width: 13rem"><div class="card-header"><strong>${cafe.name}</strong></div><div class="card-body"><div class="card-text"><strong>contact: </strong>${self.contact}</div><div class="card-text"><strong>address: </strong>${self.address}</div><div class="card-text"><strong>homepage: </strong>${self.homepage(dataRetrieved.url)}</div></div></div>`;
+        self.contentStrings = `<div class="card"><h6 class="card-header">${cafe.name}</h5>
+            <div class="card-body">
+            <div class="card-text"><span class="font-weight-bold">contact: </span>${self.contact}</div>
+            <div class="card-text"><span class="font-weight-bold">address: </span>${self.address}</div>
+            <div class="card-text"><span class="font-weight-bold">homepage: </span>${self.homepage(dataRetrieved.url)}</div></div></div>`;
+
         self.VENUE_ID = dataRetrieved.id;
 
         // Make a second request for venue's photo by using another endpoint (this separate api call has to be done because the request for the photos data requires a venue_id in its request URL which is retrieved precedently)
@@ -62,12 +69,13 @@ function LocationDetail(cafe) {
     this.marker = new google.maps.Marker({
         position: new google.maps.LatLng(this.lat, this.lng),
         title: this.name,
+        map: map,
         animation: google.maps.Animation.DROP
     });
 
     // Sets only the marker filtered
     this.setMarker = ko.computed(function() {
-        return self.showMarker() ? self.marker.setMap(map) : self.marker.setMap(null);
+        return self.showMarker() ? self.marker.setVisible(true) : self.marker.setVisible(false);
     });
 
     // when marker is clicked, bounce it and open infoWindow
