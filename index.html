@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,14 +9,18 @@
     <title>NEIGHBORHOOD MAP: Cafes in Leuven, Belgium</title>
 
     <!-- Bootstrap CSS CDN -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
     <!-- Icons -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css" integrity="sha384-v2Tw72dyUXeU3y4aM2Y0tBJQkGfplr39mxZqlTBDUZAb9BGoC40+rdFCG0m10lXk" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/fontawesome.css" integrity="sha384-q3jl8XQu1OpdLgGFvNRnPdj5VIlCvgsDQTQB6owSOHWlAurxul7f+JpUOVdAiJ5P" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css" integrity="sha384-v2Tw72dyUXeU3y4aM2Y0tBJQkGfplr39mxZqlTBDUZAb9BGoC40+rdFCG0m10lXk"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/fontawesome.css" integrity="sha384-q3jl8XQu1OpdLgGFvNRnPdj5VIlCvgsDQTQB6owSOHWlAurxul7f+JpUOVdAiJ5P"
+        crossorigin="anonymous">
     <!-- My Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
 
-    <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAr0kiq324g9soFfU_0rqmh5IZ2M6S3L6A&callback=initMap" onerror="googleMapError()"></script>
+    <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAr0kiq324g9soFfU_0rqmh5IZ2M6S3L6A&callback=initMap"
+        onerror="googleMapError()"></script>
 
 </head>
 
@@ -23,18 +28,20 @@
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark flex-sm-nowrap px-2">
         <div class="dropdown d-flex flex-column flex-sm-row w-100">
             <!-- dropdown toggle button -->
-            <button class="btn btn-secondary d-none d-sm-block" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button class="btn btn-secondary d-none d-sm-block" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <!-- app title -->
             <a class="navbar-brand text-center mr-0 mr-sm-2" href="#">NEIGHBORHOOD MAP</a>
             <!-- search form -->
-            <input class="form-control form-control-dark w-100" type="text" id="searchForm" data-toggle="dropdown" placeholder="Search and pick one from the menu" aria-label="Search" data-bind="textInput: searchItem, valueUpdate: 'afterkeydown'">
+            <input class="form-control form-control-dark w-100" type="text" id="searchForm" data-toggle="dropdown"
+                placeholder="Search and pick one from the menu" aria-label="Search" data-bind="textInput: searchItem, valueUpdate: 'afterkeydown'">
             <!-- dropdown menu where the cafe list appears in -->
             <div class="dropdown-menu bg-light p-2" aria-labelledby="dropdownMenuButton">
                 <a class="nav-link dropdown-title ml-1" href="#">
-                  <i class="fa fa-home"></i>
-                  Cafes in Leuven, Belgium
+                    <i class="fa fa-home"></i>
+                    Cafes in Leuven, Belgium
                 </a>
                 <ul class="pl-0" data-bind="foreach: filteredDataArray">
                     <li class="dropdown-item nav-item d-flex pl-1">
@@ -58,14 +65,17 @@
     <script src="js/knockout-3.4.2.js"></script>
 
     <!-- Bootstrap Js CDN -->
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 
     <!-- Refer to README.md to apply your own foursquare ID and Secret.
         config_original.js is gitignored for security reason -->
-    <!-- <script src="js/config_original.js"></script> -->
-    <script src="js/config_for_reviewer.js"></script>
+    <script src="js/config_original.js"></script>
+    <!-- <script src="js/config_for_reviewer.js"></script> -->
     <script src="js/default_data.js"></script>
     <script src="js/additions.js"></script>
     <script src="js/app.js"></script>
