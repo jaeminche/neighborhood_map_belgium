@@ -102,9 +102,7 @@ function LocationDetail(cafe) {
 
   // Sets only the marker filtered
   this.setMarker = ko.computed(function() {
-    return self.showMarker()
-      ? self.marker.setVisible(true)
-      : self.marker.setVisible(false);
+    return self.marker.setVisible(self.showMarker());
   });
 
   // when marker is clicked, bounce it and open infoWindow
