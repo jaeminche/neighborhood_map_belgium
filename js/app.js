@@ -4,10 +4,10 @@
 
 let map, infowindow, oldMarker, dataReqFoursquare, imgReqFoursquare;
 
-let OpenInfoWindow = function(cafe) {
+const OpenInfoWindow = function(cafe) {
   let dataRetrieved, photoDataRetrieved, imgUrl;
 
-  let self = this;
+  const self = this;
   dataReqFoursquare = `https://api.foursquare.com/v2/venues/search?ll=${
     cafe.lat
   },${cafe.lng}
@@ -72,7 +72,7 @@ let OpenInfoWindow = function(cafe) {
 /*
  * Bounces only the marker clicked on and stops the previously selected marker bounce if there's any.
  */
-let bounceMarker = markerSelected => {
+const bounceMarker = markerSelected => {
   if (
     oldMarker !== undefined &&
     oldMarker.getAnimation() !== null &&
@@ -85,7 +85,7 @@ let bounceMarker = markerSelected => {
 };
 
 function LocationDetail(cafe) {
-  let self = this;
+  const self = this;
   this.name = cafe.name;
   this.lat = cafe.lat;
   this.lng = cafe.lng;
@@ -117,7 +117,7 @@ function LocationDetail(cafe) {
 }
 
 function ViewModel() {
-  let self = this;
+  const self = this;
 
   this.searchItem = ko.observable("");
 
@@ -129,7 +129,7 @@ function ViewModel() {
   });
 
   this.filteredDataArray = ko.computed(function() {
-    let filteredLowerCased = self.searchItem().toLowerCase();
+    const filteredLowerCased = self.searchItem().toLowerCase();
     // If before search, show markers for all the locations and return them,
     // if not, show and return only the filtered ones
     if (!filteredLowerCased) {
@@ -139,8 +139,8 @@ function ViewModel() {
       return self.unfilteredDataArray();
     } else {
       return ko.utils.arrayFilter(self.unfilteredDataArray(), function(cafe) {
-        let cafeLowerCased = cafe.name.toLowerCase();
-        let result = cafeLowerCased.search(filteredLowerCased) >= 0;
+        const cafeLowerCased = cafe.name.toLowerCase();
+        const result = cafeLowerCased.search(filteredLowerCased) >= 0;
         cafe.showMarker(result);
         return result;
       });
