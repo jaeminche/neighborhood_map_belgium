@@ -58,5 +58,10 @@ let defaultData = [
     name: "Café In Den Ouden Tijd",
     lat: 50.881764686568104,
     lng: 4.714513956648781
+  },
+  {
+    name: "Anna Specialty Bar",
+    lat: 50.87905,
+    lng: 4.7025063
   }
 ];
